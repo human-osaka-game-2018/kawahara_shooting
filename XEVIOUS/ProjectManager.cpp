@@ -3,32 +3,14 @@
 
 ProjectManager::ProjectManager()
 {
-	
+	m_pDirectX = DirectX::GetInstance();
 }
 
 ProjectManager::~ProjectManager()
 {
-
+	FreeDx();
 }
 
-void ProjectManager::PrepareDrawing()
-{
-	//画面の消去
-	g_pD3Device->Clear(0, NULL,
-		D3DCLEAR_TARGET,
-		D3DCOLOR_XRGB(0x00, 0x00, 0x00),
-		1.0, 0);
-	//描画の開始
-	g_pD3Device->BeginScene();
-}
-
-void ProjectManager::FinalizeDrawing()
-{
-	//描画の終了
-	g_pD3Device->EndScene();
-	//表示
-	g_pD3Device->Present(NULL, NULL, NULL, NULL);
-}
 
 int ProjectManager::MessageLoop()
 {
@@ -51,15 +33,18 @@ int ProjectManager::MessageLoop()
 			SyncNow = timeGetTime();
 			if (SyncNow - SyncOld >= 1000 / 60)//1秒間に60回この中に入るはず
 			{
+				//キー情報の取得に必要
+				m_pDirectX->CaptureKeyState();
+
 				//シーンのUpdate
 				SceneManager.Update();
 
 				//描画の準備
-				PrepareDrawing();
+				m_pDirectX->PrepareDrawing();
 				//シーンのRender
 				SceneManager.Render();
 				//描画の終わり
-				FinalizeDrawing();
+				m_pDirectX->FinalizeDrawing();
 
 				SyncOld = SyncNow;
 			}
@@ -83,44 +68,79 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 }
 
 //メモリ開放
-void FreeDx()
+void ProjectManager::FreeDx()
 {
-	for (int i = 0; i <= TEXMAX; i++)
+	m_pDirectX->m_pTexture.clear();
+	std::map<std::string, LPDIRECT3DTEXTURE9>().swap(m_pDirectX->m_pTexture);
+	if (m_pDirectX->m_pKeyDevice)
 	{
-		SAFE_RELEASE(g_pTexture[i]);
+		m_pDirectX->m_pKeyDevice->Unacquire();
 	}
-	SAFE_RELEASE(g_pD3Device);
-	SAFE_RELEASE(g_pDirect3D);
+	SAFE_RELEASE(m_pDirectX->m_pD3Device);
+	SAFE_RELEASE(m_pDirectX->m_pDirect3D);
+	SAFE_RELEASE(m_pDirectX->m_pKeyDevice);
+	SAFE_RELEASE(m_pDirectX->m_pDinput);
+	m_pDirectX->DeleteInstence();
 }
 
-//ダイレクト3Dの初期化関数
-HRESULT InitDirect3DDevice(HWND hWnd)
+//ダイレクト3DのDirectX初期化関数
+HRESULT ProjectManager::InitDirect3DDevice(HWND hWnd)
 {
 	//DirectX オブジェクトの生成
-	g_pDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
-	ZeroMemory(&g_D3dPresentParameters,
+	m_pDirectX->m_pDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
+	ZeroMemory(&m_pDirectX->m_D3dPresentParameters,
 		sizeof(D3DPRESENT_PARAMETERS));
 
 	//Display Mode の設定
-	g_pDirect3D->GetAdapterDisplayMode(
+	m_pDirectX->m_pDirect3D->GetAdapterDisplayMode(
 		D3DADAPTER_DEFAULT,
-		&g_D3DdisplayMode);
-	g_D3dPresentParameters.BackBufferFormat = g_D3DdisplayMode.Format;
-	g_D3dPresentParameters.BackBufferCount = 1;
-	g_D3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	g_D3dPresentParameters.Windowed = TRUE;
+		&m_pDirectX->m_D3DdisplayMode);
+	m_pDirectX->m_D3dPresentParameters.BackBufferFormat = m_pDirectX->m_D3DdisplayMode.Format;
+	m_pDirectX->m_D3dPresentParameters.BackBufferCount = 1;
+	m_pDirectX->m_D3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	m_pDirectX->m_D3dPresentParameters.Windowed = TRUE;
 
 	//デバイスを作る
-	g_pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3dPresentParameters, &g_pD3Device);
+	m_pDirectX->m_pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING, &m_pDirectX->m_D3dPresentParameters, &m_pDirectX->m_pD3Device);
 
+	return S_OK;
+}
+
+HRESULT ProjectManager::InitDinput(HWND hWnd)
+{
+	HRESULT hr;
+
+	//ダイレクトインプットのオブジェの作成
+	if (FAILED(hr = DirectInput8Create(GetModuleHandle(NULL),
+		DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&m_pDirectX->m_pDinput, NULL)))
+	{
+		return hr;
+	}
+	//ダイレクトインプットのデバイスの作成
+	if (FAILED(hr = m_pDirectX->m_pDinput->CreateDevice(GUID_SysKeyboard,
+		&m_pDirectX->m_pKeyDevice, NULL)))
+	{
+		return hr;
+	}
+	//デバイスをキーボードの設定
+	if (FAILED(hr = m_pDirectX->m_pKeyDevice->SetDataFormat(&c_dfDIKeyboard)))
+	{
+		return hr;
+	}
+	//協調レベル
+	if (FAILED(hr = m_pDirectX->m_pKeyDevice->SetCooperativeLevel(
+		hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND)))
+	{
+		return hr;
+	}
 	return S_OK;
 }
 
 //メインルーチン
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
-	ProjectManager* pProjectManager = new ProjectManager();
+	ProjectManager pProjectManager;
 
 	WNDCLASS Wndclass;
 	HWND hWnd;
@@ -164,6 +184,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	int client_size_y = (client.bottom - client.top);
 	int frame_size_x = window_size_x - client_size_x;
 	int frame_size_y = window_size_y - client_size_y;
+
 	// ウィンドウサイズ再設定
 	SetWindowPos(
 		// ウィンドウハンドル
@@ -184,42 +205,48 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	ShowWindow(hWnd, SW_SHOW);
 	// クライアント領域更新
 	UpdateWindow(hWnd);
-
 	if (!hWnd) return 0;
 
-	InitDirect3DDevice(hWnd);
+	pProjectManager.InitDirect3DDevice(hWnd);
+
+
+	//DirectX オブジェクトの生成
+	if (NULL == (pProjectManager.m_pDirectX->m_pDirect3D = Direct3DCreate9(D3D_SDK_VERSION)))
+	{
+		MessageBox(0,"DirectXの作成に失敗しました","",MB_OK);
+		return -1;
+	}
+
+	ZeroMemory(&pProjectManager.m_pDirectX->m_D3dPresentParameters,sizeof(D3DPRESENT_PARAMETERS));
+
+	pProjectManager.m_pDirectX->m_D3dPresentParameters.BackBufferFormat = pProjectManager.m_pDirectX->m_D3DdisplayMode.Format;
+	pProjectManager.m_pDirectX->m_D3dPresentParameters.BackBufferCount = 1;
+	pProjectManager.m_pDirectX->m_D3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	pProjectManager.m_pDirectX->m_D3dPresentParameters.Windowed = TRUE;
+				   
+	//デバイスを作る
+	pProjectManager.m_pDirectX->m_pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &pProjectManager.m_pDirectX->m_D3dPresentParameters, &pProjectManager.m_pDirectX->m_pD3Device);
+	//DirectInputの初期化
+	if (pProjectManager.InitDinput(hWnd) != S_OK)
+	{
+		pProjectManager.FreeDx();
+		MessageBox(0, "DirectInputの初期化に失敗しました", "", MB_OK);
+		return -1;
+	}
 
 	//描画設定
-	g_pD3Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	g_pD3Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);//SRCの設定
-	g_pD3Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pProjectManager.m_pDirectX->m_pD3Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	pProjectManager.m_pDirectX->m_pD3Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);//SRCの設定
+	pProjectManager.m_pDirectX->m_pD3Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	g_pD3Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	g_pD3Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	pProjectManager.m_pDirectX->m_pD3Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	pProjectManager.m_pDirectX->m_pD3Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
 
-	g_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-	g_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	pProjectManager.m_pDirectX->m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	pProjectManager.m_pDirectX->m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 
 	//頂点に入れるデータを設定
-	g_pD3Device->SetFVF(D3DFVF_CUSTOMVERTEX);
+	pProjectManager.m_pDirectX->m_pD3Device->SetFVF(D3DFVF_CUSTOMVERTEX);
 
-
-	//フォントオブジェクトの作成
-	D3DXCreateFont(
-		g_pD3Device,				// Direct3Dデバイス
-		100,						// 高さ 表示する文字の大きさ
-		100,					// 幅　表示する文字の大きさ
-		FW_REGULAR,				// フォントの太さ 普通
-		NULL,					// 下線
-		FALSE,					// 斜体
-		SHIFTJIS_CHARSET,		// 文字セット
-		OUT_DEFAULT_PRECIS,		// 出力制度は普通
-		PROOF_QUALITY,			// 文字品質を重視
-		FIXED_PITCH | FF_SCRIPT,	// ピッチとファミリ
-		TEXT("ＭＳ　Ｐゴシック"),	// フォント名
-		&pFont);					// ID3DXFontポインタ
-
-	pProjectManager->MessageLoop();
+	pProjectManager.MessageLoop();
 }
-
-

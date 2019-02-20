@@ -19,13 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectX.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ProjectManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomVertex.h" />
+    <ClInclude Include="DirectX.h" />
     <ClInclude Include="SceneID.h" />
+    <ClInclude Include="GamePlayer.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="ProjectManager.h" />
     <ClInclude Include="Scene.h" />
