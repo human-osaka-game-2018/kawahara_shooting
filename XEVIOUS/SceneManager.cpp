@@ -3,10 +3,9 @@
 
 
 
-SceneManager::SceneManager()
+SceneManager::SceneManager() : m_CurrentScene(SCENE_NONE), m_NextScene(GAME_SCENE)
 {
-	m_CurrentScene = SCENE_NONE;
-	m_NextScene = GAME_SCENE;
+
 }
 
 SceneManager::~SceneManager()

@@ -17,12 +17,12 @@ public:
 
 private:
 	DirectX * m_pDirectX;
-	GamePlayer * m_pGamePlayer;
-	CustomVertex m_GameBG[4];
+	GamePlayer* m_pGamePlayer;
+	CustomVertex m_BGVertices[4];
 	struct InfoGameBG
 	{
 		float CenterBGPosX = 0.f;
 		float CenterBGPosY = 0.f;
 	};
-
+	void ScrollBackGround();
 };

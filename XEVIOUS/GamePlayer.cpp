@@ -1,13 +1,13 @@
 ﻿#include "GamePlayer.h"
 
-
 GamePlayer::GamePlayer()
 {
 	m_pDirectX = DirectX::GetInstance();
-	InfoPlayer CenterPlayerPos;
-	CenterPlayerPos.CenterPlayerPosX = 320.f;
-	CenterPlayerPos.CenterPlayerPosY = 464.f;
-	m_pDirectX->InitSquareCustomVertex(m_Player, CenterPlayerPos.CenterPlayerPosX, CenterPlayerPos.CenterPlayerPosY, PLAYER_SIZE);
+	m_pGameBullet = new GameBullet();
+	InfoPlayer centerPlayerPos;
+	centerPlayerPos.CenterPlayerPosX = 320.f;
+	centerPlayerPos.CenterPlayerPosY = 464.f;
+	m_pDirectX->InitSquareCustomVertex(m_Player, centerPlayerPos.CenterPlayerPosX, centerPlayerPos.CenterPlayerPosY, PLAYER_SIZE);
 }
 
 GamePlayer::~GamePlayer()
@@ -17,7 +17,17 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
+	//キャラのキーの動き
+	KeyOperation();
+	//ステージ外に出たら戻る
+	TurnbackToGameArea();
+	//弾の動き
+	m_pGameBullet->Update();
+}
 
+
+void GamePlayer::KeyOperation()
+{
 	D3DXVECTOR2 moveDirection(0.f, 0.f);
 	if (m_pDirectX->IsKeyPressed(DIK_LEFT))
 	{
@@ -42,7 +52,17 @@ void GamePlayer::Update()
 
 	m_pDirectX->MoveCustomVertex(m_Player, moveDirection);
 
-	//ステージ外に行かせない処理
+	if (m_pDirectX->IsKeyPressed(DIK_SPACE))
+	{
+		float centerX = m_Player[0].x + (PLAYER_SIZE / 2);
+		float centerY = m_Player[0].y + (PLAYER_SIZE / 2);
+		m_pGameBullet->Create(centerX, centerY);
+	}
+}
+
+//ステージ外に出たら戻る
+void GamePlayer::TurnbackToGameArea()
+{
 	float centerX;
 	float centerY;
 	if (m_Player[0].x <= MARGIN)
@@ -74,4 +94,5 @@ void GamePlayer::Update()
 void GamePlayer::Render()
 {
 	m_pDirectX->DrawTexture("GAME_PLAYER_TEX", m_Player);
+	m_pGameBullet->Render();
 }

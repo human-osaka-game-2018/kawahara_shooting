@@ -5,10 +5,10 @@ GameScene::GameScene()
 	m_pDirectX = DirectX::GetInstance();
 	m_pGamePlayer = new GamePlayer();
 	LoadResources();
-	InfoGameBG CenterBG;
-	CenterBG.CenterBGPosX = 320.f;
-	CenterBG.CenterBGPosY = 240.f;
-	m_pDirectX->InitRectangleCustomVertex(m_GameBG, CenterBG.CenterBGPosX, CenterBG.CenterBGPosY,384.f,480.f);
+	InfoGameBG centerBG;
+	centerBG.CenterBGPosX = 320.f;
+	centerBG.CenterBGPosY = 240.f;
+	m_pDirectX->InitRectangleCustomVertex(m_BGVertices, centerBG.CenterBGPosX, centerBG.CenterBGPosY,384.f,480.f);
 }
 
 GameScene::~GameScene()
@@ -20,12 +20,13 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
 	m_pGamePlayer->Update();
+	ScrollBackGround();
 	KeyOperation();
 }
 
 void GameScene::Render()
 {
-	m_pDirectX->DrawTexture("GAME_BG_TEX", m_GameBG);
+	m_pDirectX->DrawTexture("GAME_BG_TEX", m_BGVertices);
 	m_pGamePlayer->Render();
 }
 
@@ -38,4 +39,20 @@ void GameScene::LoadResources()
 {
 	m_pDirectX->LoadTexture("Texture/Player.png", "GAME_PLAYER_TEX");
 	m_pDirectX->LoadTexture("Texture/GameBG.jpg", "GAME_BG_TEX");
+	m_pDirectX->LoadTexture("Texture/Bullet.png", "GAME_BULLET_TEX");
+}
+
+void GameScene::ScrollBackGround()
+{
+	if (m_BGVertices[0].tv <= -1.0f)
+	{
+		for (CustomVertex& bgVertex : m_BGVertices)
+		{
+			bgVertex.tv += 1.0f;
+		}
+	}
+	for (CustomVertex& bgVertex : m_BGVertices)
+	{
+		bgVertex.tv -= 0.01f;
+	}
 }
