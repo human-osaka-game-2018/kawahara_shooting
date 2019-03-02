@@ -18,11 +18,11 @@ public:
 private:
 	DirectX * m_pDirectX;
 	GamePlayer * m_pGamePlayer;
-	CustomVertex m_GameBG[4];
+	CustomVertex m_BG[4];
 	struct InfoGameBG
 	{
 		float CenterBGPosX = 0.f;
 		float CenterBGPosY = 0.f;
 	};
-
+	void BGScroll(CustomVertex BG[4]);
 };
