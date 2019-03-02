@@ -22,5 +22,6 @@ private:
 		float CenterPlayerPosX = 0.f;
 		float CenterPlayerPosY = 0.f;
 	};
-
+	void KeyOperation();
+	void RestrictionFrameOut();
 };

@@ -17,7 +17,15 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
+	//キャラのキーの動きの処理
+	KeyOperation();
+	//ステージ外に行かせない処理
+	RestrictionFrameOut();
+}
 
+
+void GamePlayer::KeyOperation()
+{
 	D3DXVECTOR2 moveDirection(0.f, 0.f);
 	if (m_pDirectX->IsKeyPressed(DIK_LEFT))
 	{
@@ -41,8 +49,11 @@ void GamePlayer::Update()
 	moveDirection *= PLAYER_MOVE_SPEED;
 
 	m_pDirectX->MoveCustomVertex(m_Player, moveDirection);
+}
 
 	//ステージ外に行かせない処理
+void GamePlayer::RestrictionFrameOut()
+{
 	float centerX;
 	float centerY;
 	if (m_Player[0].x <= MARGIN)
