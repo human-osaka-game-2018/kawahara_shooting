@@ -1,9 +1,9 @@
 ﻿#include "GamePlayer.h"
 
-
 GamePlayer::GamePlayer()
 {
 	m_pDirectX = DirectX::GetInstance();
+	m_pGameBullet = new GameBullet();
 	InfoPlayer CenterPlayerPos;
 	CenterPlayerPos.CenterPlayerPosX = 320.f;
 	CenterPlayerPos.CenterPlayerPosY = 464.f;
@@ -21,6 +21,8 @@ void GamePlayer::Update()
 	KeyOperation();
 	//ステージ外に行かせない処理
 	RestrictionFrameOut();
+	//弾の動きの処理
+	m_pGameBullet->Update();
 }
 
 
@@ -85,4 +87,5 @@ void GamePlayer::RestrictionFrameOut()
 void GamePlayer::Render()
 {
 	m_pDirectX->DrawTexture("GAME_PLAYER_TEX", m_Player);
+	m_pGameBullet->Render();
 }

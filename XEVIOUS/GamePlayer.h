@@ -2,6 +2,7 @@
 
 #include "CustomVertex.h"
 #include "DirectX.h"
+#include "GameBullet.h"
 
 const float PLAYER_SIZE = 32.f;
 const float PLAYER_MOVE_SPEED = 5.f;

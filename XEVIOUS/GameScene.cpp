@@ -39,6 +39,7 @@ void GameScene::LoadResources()
 {
 	m_pDirectX->LoadTexture("Texture/Player.png", "GAME_PLAYER_TEX");
 	m_pDirectX->LoadTexture("Texture/GameBG.jpg", "GAME_BG_TEX");
+	m_pDirectX->LoadTexture("Texture/Bullet.png", "GAME_BULLET_TEX");
 }
 
 void GameScene::BGScroll(CustomVertex BG[4])
@@ -50,8 +51,8 @@ void GameScene::BGScroll(CustomVertex BG[4])
 		BG[2].tv = 1.0f;
 		BG[3].tv = 1.0f;
 	}
-		BG[0].tv -= 0.01f;
-		BG[1].tv -= 0.01f;
-		BG[2].tv -= 0.01f;
-		BG[3].tv -= 0.01f;
+	for (int i = 0;i < 4;i++)
+	{
+		BG[i].tv -= 0.01f;
+	}
 }
