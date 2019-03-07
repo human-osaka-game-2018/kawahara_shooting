@@ -2,12 +2,9 @@
 
 using std::vector;
 
-GameBullet::GameBullet()
+GameBullet::GameBullet() : m_BulletInterval(false), m_BulletIntervalCount(0), m_BulletIntervalRange(8)
 {
 	m_pDirectX = DirectX::GetInstance();
-	m_BulletIntervalCount = 0;
-	m_BulletInterval = false;
-	m_BulletIntervalRange = 8;
 }
 
 GameBullet::~GameBullet()
