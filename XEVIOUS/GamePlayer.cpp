@@ -17,7 +17,7 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
-	//キャラのキーの動きの
+	//キャラのキーの動き
 	KeyOperation();
 	//ステージ外に出たら戻る
 	TurnbackToGameArea();
@@ -60,7 +60,7 @@ void GamePlayer::KeyOperation()
 	}
 }
 
-	//ステージ外に行かせない処理
+//ステージ外に出たら戻る
 void GamePlayer::TurnbackToGameArea()
 {
 	float centerX;

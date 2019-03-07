@@ -16,7 +16,7 @@ void GameBullet::Update()
 {
 	for (auto& centerBullet : m_BulletPos)
 	{
-		centerBullet.y -= BULLETSPEED;
+		centerBullet.y -= BULLET_SPEED;
 		m_pDirectX->InitSquareCustomVertex(centerBullet.Bullet, centerBullet.x, centerBullet.y, BULLET_SIZE);
 	}
 
