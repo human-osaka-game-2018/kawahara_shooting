@@ -17,11 +17,11 @@ GamePlayer::~GamePlayer()
 
 void GamePlayer::Update()
 {
-	//キャラのキーの動きの処理
+	//キャラのキーの動きの
 	KeyOperation();
-	//ステージ外に行かせない処理
+	//ステージ外に出たら戻る
 	TurnbackToGameArea();
-	//弾の動きの処理
+	//弾の動き
 	m_pGameBullet->Update();
 }
 
