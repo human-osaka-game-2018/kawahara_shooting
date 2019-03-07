@@ -8,7 +8,7 @@ GameScene::GameScene()
 	InfoGameBG CenterBG;
 	CenterBG.CenterBGPosX = 320.f;
 	CenterBG.CenterBGPosY = 240.f;
-	m_pDirectX->InitRectangleCustomVertex(m_BG, CenterBG.CenterBGPosX, CenterBG.CenterBGPosY,384.f,480.f);
+	m_pDirectX->InitRectangleCustomVertex(m_BGVertices, CenterBG.CenterBGPosX, CenterBG.CenterBGPosY,384.f,480.f);
 }
 
 GameScene::~GameScene()
@@ -26,7 +26,7 @@ void GameScene::Update()
 
 void GameScene::Render()
 {
-	m_pDirectX->DrawTexture("GAME_BG_TEX", m_BG);
+	m_pDirectX->DrawTexture("GAME_BG_TEX", m_BGVertices);
 	m_pGamePlayer->Render();
 }
 
@@ -44,19 +44,15 @@ void GameScene::LoadResources()
 
 void GameScene::ScrollBackGround()
 {
-	if (m_BG[0].tv <= -1.0f)
+	if (m_BGVertices[0].tv <= -1.0f)
 	{
-		for (int i = 0;i < 4;i++)
+		for (CustomVertex& BGVertex : m_BGVertices)
 		{
-			m_BG[i].tv = 0.f;
-			if (i > 1)
-			{
-				m_BG[i].tv = 1.0f;
-			}
+			BGVertex.tv += 1.0f;
 		}
 	}
-	for (int i = 0;i < 4;i++)
+	for (CustomVertex& BGVertex : m_BGVertices)
 	{
-		m_BG[i].tv -= 0.01f;
+		BGVertex.tv -= 0.01f;
 	}
 }

@@ -18,7 +18,7 @@ public:
 private:
 	DirectX * m_pDirectX;
 	GamePlayer* m_pGamePlayer;
-	CustomVertex m_BG[4];
+	CustomVertex m_BGVertices[4];
 	struct InfoGameBG
 	{
 		float CenterBGPosX = 0.f;
