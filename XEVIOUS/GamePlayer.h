@@ -25,5 +25,5 @@ private:
 		float CenterPlayerPosY = 0.f;
 	};
 	void KeyOperation();
-	void PushBack();
+	void TurnbackToGameArea();
 };
