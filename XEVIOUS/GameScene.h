@@ -17,8 +17,7 @@ public:
 
 private:
 	DirectX * m_pDirectX;
-	GamePlayer * m_pGamePlayer;
-	GameBullet* m_pGameBullet;
+	GamePlayer* m_pGamePlayer;
 	CustomVertex m_BG[4];
 	struct InfoGameBG
 	{

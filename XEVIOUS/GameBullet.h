@@ -26,5 +26,8 @@ private:
 	};
 	std::vector<InfoBullet> m_BulletPos;
 	InfoBullet m_CenterBullet;
+	int m_BulletIntervalCount;
+	bool m_BulletInterval;
+	int m_BulletIntervalRange;
 
 };

@@ -18,6 +18,7 @@ public:
 	
 private:
 	DirectX* m_pDirectX;
+	GameBullet* m_pGameBullet;
 	struct InfoPlayer
 	{
 		float CenterPlayerPosX = 0.f;

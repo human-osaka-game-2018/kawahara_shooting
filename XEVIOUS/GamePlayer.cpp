@@ -51,6 +51,13 @@ void GamePlayer::KeyOperation()
 	moveDirection *= PLAYER_MOVE_SPEED;
 
 	m_pDirectX->MoveCustomVertex(m_Player, moveDirection);
+
+	if (m_pDirectX->IsKeyPressed(DIK_SPACE))
+	{
+		float centerX = m_Player[0].x + (PLAYER_SIZE / 2);
+		float centerY = m_Player[0].y + (PLAYER_SIZE / 2);
+		m_pGameBullet->Create(centerX, centerY);
+	}
 }
 
 	//ステージ外に行かせない処理
