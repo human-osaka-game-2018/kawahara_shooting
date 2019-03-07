@@ -24,5 +24,5 @@ private:
 		float CenterBGPosX = 0.f;
 		float CenterBGPosY = 0.f;
 	};
-	void BGScroll(CustomVertex BG[4]);
+	void ScrollBackGround();
 };

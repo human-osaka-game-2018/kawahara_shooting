@@ -20,7 +20,7 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
 	m_pGamePlayer->Update();
-	BGScroll(m_BG);
+	ScrollBackGround();
 	KeyOperation();
 }
 
@@ -42,17 +42,21 @@ void GameScene::LoadResources()
 	m_pDirectX->LoadTexture("Texture/Bullet.png", "GAME_BULLET_TEX");
 }
 
-void GameScene::BGScroll(CustomVertex BG[4])
+void GameScene::ScrollBackGround()
 {
-	if (BG[0].tv <= -1.0f)
+	if (m_BG[0].tv <= -1.0f)
 	{
-		BG[0].tv = 0.f;
-		BG[1].tv = 0.f;
-		BG[2].tv = 1.0f;
-		BG[3].tv = 1.0f;
+		for (int i = 0;i < 4;i++)
+		{
+			m_BG[i].tv = 0.f;
+			if (i > 1)
+			{
+				m_BG[i].tv = 1.0f;
+			}
+		}
 	}
 	for (int i = 0;i < 4;i++)
 	{
-		BG[i].tv -= 0.01f;
+		m_BG[i].tv -= 0.01f;
 	}
 }

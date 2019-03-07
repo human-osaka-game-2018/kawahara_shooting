@@ -20,7 +20,7 @@ void GamePlayer::Update()
 	//キャラのキーの動きの処理
 	KeyOperation();
 	//ステージ外に行かせない処理
-	RestrictionFrameOut();
+	PushBack();
 	//弾の動きの処理
 	m_pGameBullet->Update();
 }
@@ -61,7 +61,7 @@ void GamePlayer::KeyOperation()
 }
 
 	//ステージ外に行かせない処理
-void GamePlayer::RestrictionFrameOut()
+void GamePlayer::PushBack()
 {
 	float centerX;
 	float centerY;
