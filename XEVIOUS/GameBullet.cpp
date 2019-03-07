@@ -14,10 +14,10 @@ GameBullet::~GameBullet()
 
 void GameBullet::Update()
 {
-	for (auto& CenterBullet : m_BulletPos)
+	for (auto& centerBullet : m_BulletPos)
 	{
-		CenterBullet.y -= BulletSpeed;
-		m_pDirectX->InitSquareCustomVertex(CenterBullet.Bullet, CenterBullet.x, CenterBullet.y, BulletSize);
+		centerBullet.y -= BulletSpeed;
+		m_pDirectX->InitSquareCustomVertex(centerBullet.Bullet, centerBullet.x, centerBullet.y, BulletSize);
 	}
 
 	if (m_BulletInterval)
@@ -45,8 +45,8 @@ void GameBullet::Create(float CenterPlayerPosX, float CenterPlayerPosY)
 
 void GameBullet::Render()
 {
-	for (auto& CenterBullet : m_BulletPos)
+	for (auto& centerBullet : m_BulletPos)
 	{
-		m_pDirectX->DrawTexture("GAME_BULLET_TEX", CenterBullet.Bullet);
+		m_pDirectX->DrawTexture("GAME_BULLET_TEX", centerBullet.Bullet);
 	}
 }

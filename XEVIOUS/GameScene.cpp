@@ -46,13 +46,13 @@ void GameScene::ScrollBackGround()
 {
 	if (m_BGVertices[0].tv <= -1.0f)
 	{
-		for (CustomVertex& BGVertex : m_BGVertices)
+		for (CustomVertex& bgVertex : m_BGVertices)
 		{
-			BGVertex.tv += 1.0f;
+			bgVertex.tv += 1.0f;
 		}
 	}
-	for (CustomVertex& BGVertex : m_BGVertices)
+	for (CustomVertex& bgVertex : m_BGVertices)
 	{
-		BGVertex.tv -= 0.01f;
+		bgVertex.tv -= 0.01f;
 	}
 }
