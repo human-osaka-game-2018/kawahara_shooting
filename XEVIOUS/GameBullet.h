@@ -4,7 +4,7 @@
 #include <vector>
 
 const float BULLET_SIZE = 10.f;
-const float BULLETSPEED = 7.f;
+const float BULLET_SPEED = 7.f;
 
 class GameBullet
 {
