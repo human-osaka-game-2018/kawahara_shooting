@@ -5,10 +5,10 @@ GameScene::GameScene()
 	m_pDirectX = DirectX::GetInstance();
 	m_pGamePlayer = new GamePlayer();
 	LoadResources();
-	InfoGameBG CenterBG;
-	CenterBG.CenterBGPosX = 320.f;
-	CenterBG.CenterBGPosY = 240.f;
-	m_pDirectX->InitRectangleCustomVertex(m_BGVertices, CenterBG.CenterBGPosX, CenterBG.CenterBGPosY,384.f,480.f);
+	InfoGameBG centerBG;
+	centerBG.CenterBGPosX = 320.f;
+	centerBG.CenterBGPosY = 240.f;
+	m_pDirectX->InitRectangleCustomVertex(m_BGVertices, centerBG.CenterBGPosX, centerBG.CenterBGPosY,384.f,480.f);
 }
 
 GameScene::~GameScene()

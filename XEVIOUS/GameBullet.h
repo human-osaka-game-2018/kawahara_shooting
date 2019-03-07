@@ -3,8 +3,8 @@
 #include "DirectX.h"
 #include <vector>
 
-const float BulletSize = 10.f;
-const float BulletSpeed = 7.f;
+const float BULLET_SIZE = 10.f;
+const float BULLETSPEED = 7.f;
 
 class GameBullet
 {
@@ -13,7 +13,7 @@ public:
 	~GameBullet();
 	void Update();
 	void Render();
-	void Create(float CenterPlayerPosX, float CenterPlayerPosY);
+	void Create(float centerPlayerPosX, float centerPlayerPosY);
 
 private:
 	DirectX* m_pDirectX;

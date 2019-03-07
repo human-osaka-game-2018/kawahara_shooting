@@ -16,8 +16,8 @@ void GameBullet::Update()
 {
 	for (auto& centerBullet : m_BulletPos)
 	{
-		centerBullet.y -= BulletSpeed;
-		m_pDirectX->InitSquareCustomVertex(centerBullet.Bullet, centerBullet.x, centerBullet.y, BulletSize);
+		centerBullet.y -= BULLETSPEED;
+		m_pDirectX->InitSquareCustomVertex(centerBullet.Bullet, centerBullet.x, centerBullet.y, BULLET_SIZE);
 	}
 
 	if (m_BulletInterval)
@@ -31,12 +31,12 @@ void GameBullet::Update()
 	}
 }
 
-void GameBullet::Create(float CenterPlayerPosX, float CenterPlayerPosY)
+void GameBullet::Create(float centerPlayerPosX, float centerPlayerPosY)
 {
 	if (!m_BulletInterval)
 	{
-		m_CenterBullet.x = CenterPlayerPosX;
-		m_CenterBullet.y = CenterPlayerPosY;
+		m_CenterBullet.x = centerPlayerPosX;
+		m_CenterBullet.y = centerPlayerPosY;
 		m_BulletPos.push_back(m_CenterBullet);
 
 		m_BulletInterval = true;
