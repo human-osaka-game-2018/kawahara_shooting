@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX.cpp" />
-    <ClCompile Include="GameBullet.cpp" />
-    <ClCompile Include="GamePlayer.cpp" />
-    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameScene\Bullet\GameBullet.cpp" />
+    <ClCompile Include="GameScene\GameScene.cpp" />
+    <ClCompile Include="GameScene\Player\GamePlayer.cpp" />
     <ClCompile Include="ProjectManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -30,10 +30,10 @@
   <ItemGroup>
     <ClInclude Include="CustomVertex.h" />
     <ClInclude Include="DirectX.h" />
-    <ClInclude Include="GameBullet.h" />
+    <ClInclude Include="GameScene\Bullet\GameBullet.h" />
+    <ClInclude Include="GameScene\GameScene.h" />
+    <ClInclude Include="GameScene\Player\GamePlayer.h" />
     <ClInclude Include="SceneID.h" />
-    <ClInclude Include="GamePlayer.h" />
-    <ClInclude Include="GameScene.h" />
     <ClInclude Include="ProjectManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -103,6 +103,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR);$(ProjectDir)GameScene\Bullet;$(ProjectDir)GameScene\Player;$(ProjectDir)GameScene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,6 +112,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR);$(ProjectDir)GameScene\Bullet;$(ProjectDir)GameScene\Player;$(ProjectDir)GameScene;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
