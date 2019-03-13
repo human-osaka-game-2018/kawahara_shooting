@@ -17,12 +17,18 @@ public:
 	ProjectManager();
 	~ProjectManager();
 	int MessageLoop();
-	DirectX* m_pDirectX;
-	HRESULT InitDirect3DDevice(HWND hWnd);
-	HRESULT InitDinput(HWND hWnd);
-	void FreeDx();
+	void InitWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow);
+	void InitDirect3DDevice();
+	void InitDinput();
+	void SetD3DeviceState();
+
+	DirectX* GetDXInstace()
+	{
+		return m_pDirectX;
+	}
 
 private:
-
+	DirectX * m_pDirectX;
+	static HWND m_hWnd;
 };
 

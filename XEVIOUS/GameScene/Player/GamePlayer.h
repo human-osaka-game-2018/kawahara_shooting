@@ -14,7 +14,6 @@ public:
 	~GamePlayer();
 	void Update();
 	void Render();
-	CustomVertex m_Player[4];
 	
 private:
 	DirectX* m_pDirectX;
@@ -24,6 +23,7 @@ private:
 		float CenterPlayerPosX = 0.f;
 		float CenterPlayerPosY = 0.f;
 	};
+	CustomVertex m_Player[4];
 	void KeyOperation();
 	void TurnbackToGameArea();
 };

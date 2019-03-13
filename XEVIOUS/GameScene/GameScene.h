@@ -12,8 +12,6 @@ public:
 	~GameScene();
 	void Update();
 	void Render();
-	void KeyOperation();
-	void LoadResources();
 
 private:
 	DirectX * m_pDirectX;
@@ -24,5 +22,7 @@ private:
 		float CenterBGPosX = 0.f;
 		float CenterBGPosY = 0.f;
 	};
+	void KeyOperation();
+	void LoadResources();
 	void ScrollBackGround();
 };

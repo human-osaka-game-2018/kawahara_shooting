@@ -4,7 +4,7 @@ DirectX* DirectX::m_pInstance = NULL;
 
 DirectX::DirectX()
 {
-	
+
 }
 
 
@@ -26,6 +26,100 @@ void DirectX::DeleteInstence()
 {
 	delete m_pInstance;
 	m_pInstance = NULL;
+}
+
+//メモリ開放
+void DirectX::FreeDx()
+{
+	m_pTexture.clear();
+	std::map<std::string, LPDIRECT3DTEXTURE9>().swap(m_pTexture);
+	if (m_pKeyDevice)
+	{
+		m_pKeyDevice->Unacquire();
+	}
+	SAFE_RELEASE(m_pD3Device);
+	SAFE_RELEASE(m_pDirect3D);
+	SAFE_RELEASE(m_pKeyDevice);
+	SAFE_RELEASE(m_pDinput);
+	DeleteInstence();
+}
+
+//ダイレクト3DのDirectX初期化関数
+HRESULT DirectX::InitDirect3DDevice(HWND hWnd)
+{
+	//DirectX オブジェクトの生成
+	m_pDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
+	ZeroMemory(&m_D3dPresentParameters,
+		sizeof(D3DPRESENT_PARAMETERS));
+
+	//Display Mode の設定
+	m_pDirect3D->GetAdapterDisplayMode(
+		D3DADAPTER_DEFAULT,
+		&m_D3DdisplayMode);
+	m_D3dPresentParameters.BackBufferFormat = m_D3DdisplayMode.Format;
+	m_D3dPresentParameters.BackBufferCount = 1;
+	m_D3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	m_D3dPresentParameters.Windowed = TRUE;
+
+	//デバイスを作る
+	m_pDirect3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING, &m_D3dPresentParameters, &m_pD3Device);
+
+	return S_OK;
+}
+
+HRESULT DirectX::InitDinput(HWND hWnd)
+{
+	HRESULT hr;
+
+	//ダイレクトインプットのオブジェの作成
+	if (FAILED(hr = DirectInput8Create(GetModuleHandle(NULL),
+		DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&m_pDinput, NULL)))
+	{
+		return hr;
+	}
+	//ダイレクトインプットのデバイスの作成
+	if (FAILED(hr = m_pDinput->CreateDevice(GUID_SysKeyboard,
+		&m_pKeyDevice, NULL)))
+	{
+		return hr;
+	}
+	//デバイスをキーボードの設定
+	if (FAILED(hr = m_pKeyDevice->SetDataFormat(&c_dfDIKeyboard)))
+	{
+		return hr;
+	}
+	//協調レベル
+	if (FAILED(hr = m_pKeyDevice->SetCooperativeLevel(
+		hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND)))
+	{
+		return hr;
+	}
+	return S_OK;
+}
+
+void DirectX::SetD3DeviceState()
+{
+	ZeroMemory(&m_D3dPresentParameters, sizeof(D3DPRESENT_PARAMETERS));
+
+	m_D3dPresentParameters.BackBufferFormat = m_D3DdisplayMode.Format;
+	m_D3dPresentParameters.BackBufferCount = 1;
+	m_D3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	m_D3dPresentParameters.Windowed = TRUE;
+
+	//描画設定
+	m_pD3Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	m_pD3Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);//SRCの設定
+	m_pD3Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pD3Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	m_pD3Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+
+	m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+
+	//頂点に入れるデータを設定
+	m_pD3Device->SetFVF(D3DFVF_CUSTOMVERTEX);
 }
 
 void DirectX::CaptureKeyState()
@@ -67,9 +161,9 @@ void DirectX::FinalizeDrawing()
 	m_pD3Device->Present(NULL, NULL, NULL, NULL);
 }
 
-void DirectX::InitSquareCustomVertex(CustomVertex initCustomVertex[4],float centerPlayerPosX, float centerPlayerPosY,float size)
+void DirectX::InitSquareCustomVertex(CustomVertex initCustomVertex[4], float centerPlayerPosX, float centerPlayerPosY, float size)
 {
-	InitRectangleCustomVertex(initCustomVertex, centerPlayerPosX,centerPlayerPosY, size, size);
+	InitRectangleCustomVertex(initCustomVertex, centerPlayerPosX, centerPlayerPosY, size, size);
 }
 
 void DirectX::InitRectangleCustomVertex(CustomVertex initCustomVertex[4], float centerPlayerPosX, float centerPlayerPosY, float sizeWIDTH, float sizeHEIGHT)

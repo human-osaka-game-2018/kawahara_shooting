@@ -7,6 +7,7 @@
 #include <d3dx9.h>
 #include <dinput.h>
 
+
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "d3d9.lib")
@@ -25,6 +26,31 @@
 class DirectX
 {
 public:
+	//singleton関係
+	static DirectX* GetInstance();
+	//DirectXの関係する関数
+	HRESULT InitDirect3DDevice(HWND hWnd);
+	HRESULT InitDinput(HWND hWnd);
+	void SetD3DeviceState();
+	void FreeDx();
+
+	void LoadTexture(LPCSTR filePath, std::string textureKey);
+	void DrawTexture(std::string textureKey, const CustomVertex* ptextureSize);
+	void PrepareDrawing();
+	void FinalizeDrawing();
+	//正方形のCustomVertexを設定する
+	void InitSquareCustomVertex(CustomVertex initCustomVertex[4], float centerPlayerPosX, float centerPlayerPosY, float size);
+	//長方形のCustomVertexを設定する
+	void InitRectangleCustomVertex(CustomVertex initCustomVertex[4], float centerPlayerPosX, float centerPlayerPosY, float sizeWIDTH, float sizeHEIGHT);
+	void MoveCustomVertex(CustomVertex initCustomVertex[4], const D3DXVECTOR2 quantity);
+	bool IsKeyPressed(int dik);
+	void CaptureKeyState();
+	void DeleteInstence();
+
+private:
+	DirectX();
+	~DirectX();
+
 	//Directx関係
 	std::map<std::string, LPDIRECT3DTEXTURE9> m_pTexture; //画像の情報を入れておく為のポインタ配列
 	IDirect3DDevice9*	  m_pD3Device; //Direct3Dのデバイス
@@ -36,24 +62,6 @@ public:
 	HRESULT m_hr;
 	BYTE m_diks[256];
 
-	//singleton関係
-	static DirectX* GetInstance();
 
-	void LoadTexture(LPCSTR filePath, std::string textureKey);
-	void DrawTexture(std::string textureKey, const CustomVertex* ptextureSize);
-	void PrepareDrawing();
-	void FinalizeDrawing();
-	//正方形のCustomVertexを設定する
-	void InitSquareCustomVertex(CustomVertex initCustomVertex[4],float centerPlayerPosX, float centerPlayerPosY,float size);
-	//長方形のCustomVertexを設定する
-	void InitRectangleCustomVertex(CustomVertex initCustomVertex[4], float centerPlayerPosX, float centerPlayerPosY, float sizeWIDTH, float sizeHEIGHT);
-	void MoveCustomVertex(CustomVertex initCustomVertex[4], const D3DXVECTOR2 quantity);
-	bool IsKeyPressed(int dik);
-	void CaptureKeyState();
-	void DeleteInstence();
-
-private:
-	DirectX();
-	~DirectX();
 	static DirectX* m_pInstance;
 };
