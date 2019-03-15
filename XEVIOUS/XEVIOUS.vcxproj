@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX.cpp" />
+    <ClCompile Include="GameEnemy.cpp" />
     <ClCompile Include="GameScene\Bullet\GameBullet.cpp" />
     <ClCompile Include="GameScene\GameScene.cpp" />
     <ClCompile Include="GameScene\Player\GamePlayer.cpp" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="CustomVertex.h" />
     <ClInclude Include="DirectX.h" />
+    <ClInclude Include="GameEnemy.h" />
     <ClInclude Include="GameScene\Bullet\GameBullet.h" />
     <ClInclude Include="GameScene\GameScene.h" />
     <ClInclude Include="GameScene\Player\GamePlayer.h" />
