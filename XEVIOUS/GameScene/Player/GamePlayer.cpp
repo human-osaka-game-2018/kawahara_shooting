@@ -5,9 +5,9 @@ GamePlayer::GamePlayer()
 	m_pDirectX = DirectX::GetInstance();
 	m_pGameBullet = new GameBullet();
 	InfoPlayer centerPlayerPos;
-	centerPlayerPos.CenterPlayerPosX = 320.f;
-	centerPlayerPos.CenterPlayerPosY = 464.f;
-	m_pDirectX->InitSquareCustomVertex(m_Player, centerPlayerPos.CenterPlayerPosX, centerPlayerPos.CenterPlayerPosY, PLAYER_SIZE);
+	centerPlayerPos.X = 320.f;
+	centerPlayerPos.Y = 464.f;
+	m_pDirectX->InitSquareCustomVertex(m_Player, centerPlayerPos.X, centerPlayerPos.Y, PLAYER_SIZE);
 }
 
 GamePlayer::~GamePlayer()

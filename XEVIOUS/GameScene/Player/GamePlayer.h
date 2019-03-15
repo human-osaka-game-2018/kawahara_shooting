@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include "CustomVertex.h"
 #include "DirectX.h"
 #include "GameBullet.h"
 
@@ -20,8 +19,8 @@ private:
 	GameBullet* m_pGameBullet;
 	struct InfoPlayer
 	{
-		float CenterPlayerPosX = 0.f;
-		float CenterPlayerPosY = 0.f;
+		float X = 0.f;
+		float Y = 0.f;
 	};
 	CustomVertex m_Player[4];
 	void KeyOperation();
