@@ -41,20 +41,20 @@ void GameEnemy::MoveOperation()
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
-				ENEMY_MOVE_SPEED = 4.f;
+				EnemyMoveSpeed = 4.f;
 				break;
 			case NORMAL2:
 				if (centerEnemy.MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x += 1.f;
-					ENEMY_MOVE_SPEED = 4.f;
+					EnemyMoveSpeed = 4.f;
 				}
 				if (!centerEnemy.MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x -= 1.f;
-					ENEMY_MOVE_SPEED = 4.f;
+					EnemyMoveSpeed = 4.f;
 				}
 				if (centerEnemy.MovementChangeCount == 30)
 				{
@@ -74,7 +74,7 @@ void GameEnemy::MoveOperation()
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
-			moveDirection *= ENEMY_MOVE_SPEED;
+			moveDirection *= EnemyMoveSpeed;
 			m_pDirectX->MoveCustomVertex(centerEnemy.Enemy, moveDirection);
 		}
 	}
@@ -127,10 +127,10 @@ void GameEnemy::LoadDate(const char* fileName)
 				switch (m_EnemyData.Type)
 				{
 				case NORMAL:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y,32);
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE);
 					break;
 				case NORMAL2:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, 64);
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE * 2);
 					break;
 				}
 			}

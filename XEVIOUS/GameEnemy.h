@@ -20,6 +20,8 @@ enum EnemyType
 	NORMAL2,
 };
 
+const float ENEMY_SIZE = 32.f;
+
 class GameEnemy
 {
 public:
@@ -50,5 +52,5 @@ private:
 	};
 	std::vector<InfoEnemy> m_Enemie;
 	InfoEnemy m_EnemyData;
-	float ENEMY_MOVE_SPEED;
+	float EnemyMoveSpeed;
 };
