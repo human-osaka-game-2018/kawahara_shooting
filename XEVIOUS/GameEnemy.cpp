@@ -19,7 +19,7 @@ void GameEnemy::Update()
 
 void GameEnemy::Render()
 {
-	for (auto& centerEnemy : m_EnemyPos)
+	for (auto& centerEnemy : m_EnemyCenters)
 	{
 		if (centerEnemy.AppearCount >= centerEnemy.AppearTime * 60)
 		{
@@ -31,7 +31,7 @@ void GameEnemy::Render()
 
 void GameEnemy::MoveOperation()
 {
-	for (auto& centerEnemy : m_EnemyPos)
+	for (auto& centerEnemy : m_EnemyCenters)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
 		if (centerEnemy.AppearCount >= centerEnemy.AppearTime * 60)
@@ -41,17 +41,20 @@ void GameEnemy::MoveOperation()
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
+				ENEMY_MOVE_SPEED = 4.f;
 				break;
 			case NORMAL2:
 				if (centerEnemy.MovementChange)
 				{
-					moveDirection.y += 3.f;
-					moveDirection.x += 6.f;
+					moveDirection.y += 2.f;
+					moveDirection.x += 1.f;
+					ENEMY_MOVE_SPEED = 4.f;
 				}
 				if (!centerEnemy.MovementChange)
 				{
-					moveDirection.y += 3.f;
-					moveDirection.x -= 6.f;
+					moveDirection.y += 2.f;
+					moveDirection.x -= 1.f;
+					ENEMY_MOVE_SPEED = 4.f;
 				}
 				if (centerEnemy.MovementChangeCount == 30)
 				{
@@ -71,7 +74,7 @@ void GameEnemy::MoveOperation()
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
-			moveDirection *= 3;
+			moveDirection *= ENEMY_MOVE_SPEED;
 			m_pDirectX->MoveCustomVertex(centerEnemy.Enemy, moveDirection);
 		}
 	}
@@ -141,7 +144,7 @@ void GameEnemy::LoadDate(const char* fileName)
 			if (x == MOVEPATTERN +1) {
 				y++;
 				x = 0;
-				m_EnemyPos.push_back(m_EnemyData);
+				m_EnemyCenters.push_back(m_EnemyData);
 			}
 		}
 	}
