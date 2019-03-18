@@ -11,6 +11,13 @@ enum Parameter
 	HP,
 	ITEM,
 	TYPE,
+	MOVEPATTERN,
+};
+
+enum EnemyType
+{
+	NORMAL,
+	NORMAL2,
 };
 
 class GameEnemy
@@ -23,11 +30,15 @@ public:
 	void LoadDate(const char* fileName);
 
 private:
+	void MoveOperation();
 	DirectX* m_pDirectX;
 	struct InfoEnemy
 	{
 		CustomVertex Enemy[4];
-		int count = 0;
+		int AppearCount = 0;
+		bool MovementChange = true;
+		int MovementChangeCount = 0;
+
 
 		int AppearTime;
 		float x = 0.f;
@@ -35,6 +46,7 @@ private:
 		int HP;
 		int Item;
 		int Type;
+		int MovePattern;
 	};
 	std::vector<InfoEnemy> m_EnemyPos;
 	InfoEnemy m_EnemyData;

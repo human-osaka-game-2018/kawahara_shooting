@@ -22,6 +22,7 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
 	m_pGamePlayer->Update();
+	m_pGameEnemy->Update();
 	ScrollBackGround();
 	KeyOperation();
 }

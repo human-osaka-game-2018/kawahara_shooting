@@ -14,18 +14,66 @@ GameEnemy::~GameEnemy()
 
 void GameEnemy::Update()
 {
-
+	MoveOperation();
 }
 
 void GameEnemy::Render()
 {
 	for (auto& centerEnemy : m_EnemyPos)
 	{
-		if (centerEnemy.count >= centerEnemy.AppearTime * 60)
+		if (centerEnemy.AppearCount >= centerEnemy.AppearTime * 60)
 		{
 			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", centerEnemy.Enemy);
 		}
-		centerEnemy.count++;
+		centerEnemy.AppearCount++;
+	}
+}
+
+void GameEnemy::MoveOperation()
+{
+	for (auto& centerEnemy : m_EnemyPos)
+	{
+		D3DXVECTOR2 moveDirection(0.f, 0.f);
+		if (centerEnemy.AppearCount >= centerEnemy.AppearTime * 60)
+		{
+			centerEnemy.MovementChangeCount++;
+			switch (centerEnemy.MovePattern)
+			{
+			case NORMAL:
+				moveDirection.y += 1.f;
+				break;
+			case NORMAL2:
+				if (centerEnemy.MovementChange)
+				{
+					moveDirection.y += 3.f;
+					moveDirection.x += 6.f;
+				}
+				if (!centerEnemy.MovementChange)
+				{
+					moveDirection.y += 3.f;
+					moveDirection.x -= 6.f;
+				}
+				if (centerEnemy.MovementChangeCount == 30)
+				{
+					switch (centerEnemy.MovementChange)
+					{
+					case true:
+						centerEnemy.MovementChange = false;
+						centerEnemy.MovementChangeCount = 0;
+						break;
+					case false:
+						centerEnemy.MovementChange = true;
+						centerEnemy.MovementChangeCount = 0;
+						break;
+					}
+				}
+				break;
+			}
+			//単位ベクトルを求める関数
+			D3DXVec2Normalize(&moveDirection, &moveDirection);
+			moveDirection *= 3;
+			m_pDirectX->MoveCustomVertex(centerEnemy.Enemy, moveDirection);
+		}
 	}
 }
 
@@ -72,21 +120,25 @@ void GameEnemy::LoadDate(const char* fileName)
 			}
 			if (x == TYPE)
 			{
+				m_EnemyData.Type = atoi(data);
 				switch (m_EnemyData.Type)
 				{
-				case 0:
+				case NORMAL:
 					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.x, m_EnemyData.y,32);
-					m_EnemyData.Type = atoi(data);
 					break;
-				case 1:
-					m_EnemyData.Type = atoi(data);
+				case NORMAL2:
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.x, m_EnemyData.y, 64);
 					break;
 				}
+			}
+			if (x == MOVEPATTERN)
+			{
+				m_EnemyData.MovePattern = atoi(data);
 			}
 
 			x++;
 			i = 0;
-			if (x == 6) {
+			if (x == MOVEPATTERN +1) {
 				y++;
 				x = 0;
 				m_EnemyPos.push_back(m_EnemyData);
