@@ -14,6 +14,10 @@ GameEnemy::~GameEnemy()
 
 void GameEnemy::Update()
 {
+	for (auto& centerEnemy : m_Enemie)
+	{
+		centerEnemy.AppearCount++;
+	}
 	MoveOperation();
 }
 
@@ -25,7 +29,6 @@ void GameEnemy::Render()
 		{
 			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", centerEnemy.Enemy);
 		}
-		centerEnemy.AppearCount++;
 	}
 }
 
