@@ -42,7 +42,7 @@ private:
 		int MovementChangeCount = 0;
 
 
-		int AppearTime;
+		int AppearTimeSec;
 		float X = 0.f;
 		float Y = 0.f;
 		int HP;
