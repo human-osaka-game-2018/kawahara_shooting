@@ -130,7 +130,7 @@ void GameEnemy::LoadDate(const char* fileName)
 					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE);
 					break;
 				case NORMAL2:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE * 2);
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE * 2.f);
 					break;
 				}
 			}
