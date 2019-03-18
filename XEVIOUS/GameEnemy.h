@@ -48,7 +48,7 @@ private:
 		int Type;
 		int MovePattern;
 	};
-	std::vector<InfoEnemy> m_EnemyCenters;
+	std::vector<InfoEnemy> m_Enemie;
 	InfoEnemy m_EnemyData;
 	float ENEMY_MOVE_SPEED;
 };
