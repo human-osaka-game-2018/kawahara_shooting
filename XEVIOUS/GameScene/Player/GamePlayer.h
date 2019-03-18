@@ -19,8 +19,8 @@ private:
 	GameBullet* m_pGameBullet;
 	struct InfoPlayer
 	{
-		float x = 0.f;
-		float y = 0.f;
+		float X = 0.f;
+		float Y = 0.f;
 	};
 	CustomVertex m_Player[4];
 	void KeyOperation();

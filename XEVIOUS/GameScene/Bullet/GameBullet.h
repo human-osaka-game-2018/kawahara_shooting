@@ -21,8 +21,8 @@ private:
 	{
 		CustomVertex Bullet[4];
 
-		float x = 0.f;
-		float y = 0.f;
+		float X = 0.f;
+		float Y = 0.f;
 	};
 	std::vector<InfoBullet> m_BulletPos;
 	InfoBullet m_CenterBullet;

@@ -41,8 +41,8 @@ private:
 
 
 		int AppearTime;
-		float x = 0.f;
-		float y = 0.f;
+		float X = 0.f;
+		float Y = 0.f;
 		int HP;
 		int Item;
 		int Type;

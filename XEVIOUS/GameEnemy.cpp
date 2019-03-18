@@ -107,11 +107,11 @@ void GameEnemy::LoadDate(const char* fileName)
 			}
 			if (x == POSX)
 			{
-				m_EnemyData.x = atoi(data);
+				m_EnemyData.X = atoi(data);
 			}
 			if (x == POSY)
 			{
-				m_EnemyData.y = atoi(data);
+				m_EnemyData.Y = atoi(data);
 			}
 			if (x == HP)
 			{
@@ -127,10 +127,10 @@ void GameEnemy::LoadDate(const char* fileName)
 				switch (m_EnemyData.Type)
 				{
 				case NORMAL:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.x, m_EnemyData.y,32);
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y,32);
 					break;
 				case NORMAL2:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.x, m_EnemyData.y, 64);
+					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, 64);
 					break;
 				}
 			}
