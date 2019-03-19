@@ -14,7 +14,7 @@ GameEnemy::~GameEnemy()
 
 void GameEnemy::Update()
 {
-	for (auto& centerEnemy : m_Enemie)
+	for (auto& centerEnemy : m_Enemies)
 	{
 		centerEnemy.AppearCount++;
 	}
@@ -23,7 +23,7 @@ void GameEnemy::Update()
 
 void GameEnemy::Render()
 {
-	for (auto& centerEnemy : m_Enemie)
+	for (auto& centerEnemy : m_Enemies)
 	{
 		if (centerEnemy.AppearCount >= centerEnemy.AppearTimeSec * 60)
 		{
@@ -34,7 +34,7 @@ void GameEnemy::Render()
 
 void GameEnemy::MoveOperation()
 {
-	for (auto& centerEnemy : m_Enemie)
+	for (auto& centerEnemy : m_Enemies)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
 		if (centerEnemy.AppearCount >= centerEnemy.AppearTimeSec * 60)
@@ -143,7 +143,7 @@ void GameEnemy::LoadDate(const char* fileName)
 			if (csvX == MOVEPATTERN +1) {
 				csvY++;
 				csvX = 0;
-				m_Enemie.push_back(m_EnemyData);
+				m_Enemies.push_back(m_EnemyData);
 			}
 		}
 	}

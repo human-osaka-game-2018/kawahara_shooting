@@ -50,7 +50,7 @@ private:
 		int Type;
 		int MovePattern;
 	};
-	std::vector<InfoEnemy> m_Enemie;
+	std::vector<InfoEnemy> m_Enemies;
 	InfoEnemy m_EnemyData;
 	float EnemyMoveSpeed;
 };
