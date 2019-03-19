@@ -79,14 +79,13 @@ void GameEnemy::MoveOperation()
 				}
 				if (centerEnemy.MovementChangeCount == 30)
 				{
-					switch (centerEnemy.m_MovementChange)
+					if (centerEnemy.m_MovementChange)
 					{
-					case true:
 						centerEnemy.m_MovementChange = false;
-						break;
-					case false:
+					}
+					else
+					{
 						centerEnemy.m_MovementChange = true;
-						break;
 					}
 					centerEnemy.MovementChangeCount = 0;
 				}
