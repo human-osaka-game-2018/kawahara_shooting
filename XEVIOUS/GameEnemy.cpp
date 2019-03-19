@@ -1,5 +1,14 @@
 ﻿#include"GameEnemy.h"
+#include <fstream>
+#include <string>
 
+
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+
+
+using namespace std;
 
 GameEnemy::GameEnemy()
 {
@@ -44,30 +53,30 @@ void GameEnemy::MoveOperation()
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
-				EnemyMoveSpeed = 4.f;
+				m_EnemyMoveSpeed = 4.f;
 				break;
 			case NORMAL2:
-				if (centerEnemy.MovementChange)
+				if (centerEnemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x += 1.f;
-					EnemyMoveSpeed = 4.f;
+					m_EnemyMoveSpeed = 4.f;
 				}
-				if (!centerEnemy.MovementChange)
+				if (!centerEnemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x -= 1.f;
-					EnemyMoveSpeed = 4.f;
+					m_EnemyMoveSpeed = 4.f;
 				}
 				if (centerEnemy.MovementChangeCount == 30)
 				{
-					switch (centerEnemy.MovementChange)
+					switch (centerEnemy.m_MovementChange)
 					{
 					case true:
-						centerEnemy.MovementChange = false;
+						centerEnemy.m_MovementChange = false;
 						break;
 					case false:
-						centerEnemy.MovementChange = true;
+						centerEnemy.m_MovementChange = true;
 						break;
 					}
 					centerEnemy.MovementChangeCount = 0;
@@ -76,7 +85,7 @@ void GameEnemy::MoveOperation()
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
-			moveDirection *= EnemyMoveSpeed;
+			moveDirection *= m_EnemyMoveSpeed;
 			m_pDirectX->MoveCustomVertex(centerEnemy.Enemy, moveDirection);
 		}
 	}
@@ -84,44 +93,37 @@ void GameEnemy::MoveOperation()
 
 void GameEnemy::LoadDate(const char* fileName)
 {
-	FILE *fp;
-	char data[4];
-	int csvData = 0, i = 0, csvX = 0, csvY = 0;
 
-	if ((fopen_s(&fp, fileName, "r")) != 0)
+	// ファイル読み込み関数実行
+	std::ifstream ifs(fileName);
+	std::string str;
+	
+	while (getline(ifs, str))
 	{
-		exit(1);
-	}
+		replace(str.begin(), str.end(), ',', ' ');
+		std::stringstream staggStream(str);
 
-	while ((csvData = getc(fp)) != EOF)
-	{
-		if (isdigit(csvData))
+		for (int i = 0;i < (MOVEPATTERN + 1);i++)
 		{
-			data[i] = (char)csvData;
-			i++;
-		}
-		else
-		{
-			data[i] = '\0';
-			switch (csvX)
+			switch (i)
 			{
 			case APPEARTIME:
-				m_EnemyData.AppearTimeSec = atoi(data);
+				staggStream >> m_EnemyData.AppearTimeSec;
 				break;
 			case POSX:
-				m_EnemyData.X = atoi(data);
+				staggStream >> m_EnemyData.X;
 				break;
 			case POSY:
-				m_EnemyData.Y = atoi(data);
+				staggStream >> m_EnemyData.Y;
 				break;
 			case HP:
-				m_EnemyData.HP = atoi(data);
+				staggStream >> m_EnemyData.HP;
 				break;
 			case ITEM:
-				m_EnemyData.Item = atoi(data);
+				staggStream >> m_EnemyData.Item;
 				break;
 			case TYPE:
-				m_EnemyData.Type = atoi(data);
+				staggStream >> m_EnemyData.Type;
 				switch (m_EnemyData.Type)
 				{
 				case NORMAL:
@@ -133,19 +135,10 @@ void GameEnemy::LoadDate(const char* fileName)
 				}
 				break;
 			case MOVEPATTERN:
-				m_EnemyData.MovePattern = atoi(data);
+				staggStream >> m_EnemyData.MovePattern;
 				break;
 			}
-		
-
-			csvX++;
-			i = 0;
-			if (csvX == MOVEPATTERN +1) {
-				csvY++;
-				csvX = 0;
-				m_Enemies.push_back(m_EnemyData);
-			}
 		}
+		m_Enemies.push_back(m_EnemyData);
 	}
-	fclose(fp);
 }

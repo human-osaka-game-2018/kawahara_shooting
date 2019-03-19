@@ -29,7 +29,7 @@ public:
 	~GameEnemy();
 	void Update();
 	void Render();
-	void LoadDate(const char* fileName);
+	void LoadDate(const char* fileNam);
 
 private:
 	void MoveOperation();
@@ -38,7 +38,7 @@ private:
 	{
 		CustomVertex Enemy[4];
 		int AppearCount = 0;
-		bool MovementChange = true;
+		bool m_MovementChange = true;
 		int MovementChangeCount = 0;
 
 
@@ -52,5 +52,5 @@ private:
 	};
 	std::vector<InfoEnemy> m_Enemies;
 	InfoEnemy m_EnemyData;
-	float EnemyMoveSpeed;
+	float m_EnemyMoveSpeed;
 };
