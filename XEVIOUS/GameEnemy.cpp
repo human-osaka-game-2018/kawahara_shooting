@@ -30,11 +30,11 @@ void GameEnemy::Update()
 
 void GameEnemy::Render()
 {
-	for (auto& centerEnemy : m_Enemies)
+	for (auto& infoEnemy : m_Enemies)
 	{
-		if (BeOverAppearTime(centerEnemy))
+		if (BeOverAppearTime(infoEnemy))
 		{
-			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", centerEnemy.Enemy);
+			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", infoEnemy.Enemy);
 		}
 	}
 }
@@ -50,49 +50,49 @@ bool GameEnemy::BeOverAppearTime(InfoEnemy enemies)
 
 void GameEnemy::MoveOperation()
 {
-	for (auto& centerEnemy : m_Enemies)
+	for (auto& infoEnemy : m_Enemies)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
-		if (BeOverAppearTime(centerEnemy))
+		if (BeOverAppearTime(infoEnemy))
 		{
-			centerEnemy.MovementChangeCount++;
-			switch (centerEnemy.MovePattern)
+			infoEnemy.MovementChangeCount++;
+			switch (infoEnemy.MovePattern)
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
 				m_EnemyMoveSpeed = 4.f;
 				break;
 			case NORMAL2:
-				if (centerEnemy.m_MovementChange)
+				if (infoEnemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x += 1.f;
 					m_EnemyMoveSpeed = 4.f;
 				}
-				if (!centerEnemy.m_MovementChange)
+				if (!infoEnemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x -= 1.f;
 					m_EnemyMoveSpeed = 4.f;
 				}
-				if (centerEnemy.MovementChangeCount == 30)
+				if (infoEnemy.MovementChangeCount == 30)
 				{
-					if (centerEnemy.m_MovementChange)
+					if (infoEnemy.m_MovementChange)
 					{
-						centerEnemy.m_MovementChange = false;
+						infoEnemy.m_MovementChange = false;
 					}
 					else
 					{
-						centerEnemy.m_MovementChange = true;
+						infoEnemy.m_MovementChange = true;
 					}
-					centerEnemy.MovementChangeCount = 0;
+					infoEnemy.MovementChangeCount = 0;
 				}
 				break;
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
 			moveDirection *= m_EnemyMoveSpeed;
-			m_pDirectX->MoveCustomVertex(centerEnemy.Enemy, moveDirection);
+			m_pDirectX->MoveCustomVertex(infoEnemy.Enemy, moveDirection);
 		}
 	}
 }
