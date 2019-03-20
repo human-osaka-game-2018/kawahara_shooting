@@ -8,8 +8,6 @@
 #include <algorithm>
 
 
-using namespace std;
-
 GameEnemy::GameEnemy()
 {
 	m_pDirectX = DirectX::GetInstance();
