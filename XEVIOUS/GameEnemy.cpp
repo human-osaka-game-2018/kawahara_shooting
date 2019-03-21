@@ -30,11 +30,11 @@ void GameEnemy::Update()
 
 void GameEnemy::Render()
 {
-	for (auto& infoEnemy : m_Enemies)
+	for (auto& enemy : m_Enemies)
 	{
-		if (OverTheTimeLimit(infoEnemy))
+		if (OverTheTimeLimit(enemy))
 		{
-			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", infoEnemy.Enemy);
+			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", enemy.Enemy);
 		}
 	}
 }
@@ -50,42 +50,42 @@ bool GameEnemy::OverTheTimeLimit(InfoEnemy enemies)
 
 void GameEnemy::MoveOperation()
 {
-	for (auto& infoEnemy : m_Enemies)
+	for (auto& enemy : m_Enemies)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
-		if (OverTheTimeLimit(infoEnemy))
+		if (OverTheTimeLimit(enemy))
 		{
-			infoEnemy.MovementChangeCount++;
-			switch (infoEnemy.MovePattern)
+			enemy.MovementChangeCount++;
+			switch (enemy.MovePattern)
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
 				m_EnemyMoveSpeed = 4.f;
 				break;
 			case NORMAL2:
-				if (infoEnemy.m_MovementChange)
+				if (enemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x += 1.f;
 					m_EnemyMoveSpeed = 4.f;
 				}
-				if (!infoEnemy.m_MovementChange)
+				if (!enemy.m_MovementChange)
 				{
 					moveDirection.y += 2.f;
 					moveDirection.x -= 1.f;
 					m_EnemyMoveSpeed = 4.f;
 				}
-				if (infoEnemy.MovementChangeCount == 30)
+				if (enemy.MovementChangeCount == 30)
 				{
- 					infoEnemy.m_MovementChange = !infoEnemy.m_MovementChange;
-					infoEnemy.MovementChangeCount = 0;
+ 					enemy.m_MovementChange = !enemy.m_MovementChange;
+					enemy.MovementChangeCount = 0;
 				}
 				break;
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
 			moveDirection *= m_EnemyMoveSpeed;
-			m_pDirectX->MoveCustomVertex(infoEnemy.Enemy, moveDirection);
+			m_pDirectX->MoveCustomVertex(enemy.Enemy, moveDirection);
 		}
 	}
 }
