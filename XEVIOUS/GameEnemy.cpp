@@ -32,14 +32,14 @@ void GameEnemy::Render()
 {
 	for (auto& infoEnemy : m_Enemies)
 	{
-		if (BeOverAppearTime(infoEnemy))
+		if (OverTheTimeLimit(infoEnemy))
 		{
 			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", infoEnemy.Enemy);
 		}
 	}
 }
 
-bool GameEnemy::BeOverAppearTime(InfoEnemy enemies)
+bool GameEnemy::OverTheTimeLimit(InfoEnemy enemies)
 {
 	if (enemies.AppearCount >= enemies.AppearTimeSec * 60)
 	{
@@ -53,7 +53,7 @@ void GameEnemy::MoveOperation()
 	for (auto& infoEnemy : m_Enemies)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
-		if (BeOverAppearTime(infoEnemy))
+		if (OverTheTimeLimit(infoEnemy))
 		{
 			infoEnemy.MovementChangeCount++;
 			switch (infoEnemy.MovePattern)

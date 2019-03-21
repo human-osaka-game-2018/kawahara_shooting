@@ -53,5 +53,5 @@ private:
 	std::vector<InfoEnemy> m_Enemies;
 	InfoEnemy m_EnemyData;
 	float m_EnemyMoveSpeed;
-	bool BeOverAppearTime(InfoEnemy enemies);
+	bool OverTheTimeLimit(InfoEnemy enemies);
 };
