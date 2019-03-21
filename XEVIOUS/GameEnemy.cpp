@@ -77,14 +77,7 @@ void GameEnemy::MoveOperation()
 				}
 				if (infoEnemy.MovementChangeCount == 30)
 				{
-					if (infoEnemy.m_MovementChange)
-					{
-						infoEnemy.m_MovementChange = false;
-					}
-					else
-					{
-						infoEnemy.m_MovementChange = true;
-					}
+ 					infoEnemy.m_MovementChange = !infoEnemy.m_MovementChange;
 					infoEnemy.MovementChangeCount = 0;
 				}
 				break;
