@@ -50,8 +50,8 @@ private:
 		int Type;
 		int MovePattern;
 	};
-	std::vector<InfoEnemy> m_EnemiesOfStatus;
+	std::vector<InfoEnemy> m_EnemyStatuses;
 	InfoEnemy m_EnemyData;
 	float m_EnemyMoveSpeed;
-	bool OverTheTimeLimit(InfoEnemy enemies);
+	bool AppearCountIsMoreThan(InfoEnemy enemies);
 };

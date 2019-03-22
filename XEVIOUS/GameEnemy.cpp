@@ -21,71 +21,66 @@ GameEnemy::~GameEnemy()
 
 void GameEnemy::Update()
 {
-	for (auto& enemyOfStatus : m_EnemiesOfStatus)
+	for (auto& status : m_EnemyStatuses)
 	{
-		enemyOfStatus.AppearCount++;
+		status.AppearCount++;
 	}
 	MoveOperation();
 }
 
 void GameEnemy::Render()
 {
-	for (auto& enemyOfStatus : m_EnemiesOfStatus)
+	for (auto& status : m_EnemyStatuses)
 	{
-		if (OverTheTimeLimit(enemyOfStatus))
+		if (AppearCountIsMoreThan(status))
 		{
-			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", enemyOfStatus.Enemy);
+			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", status.Enemy);
 		}
 	}
 }
 
-bool GameEnemy::OverTheTimeLimit(InfoEnemy enemyOfStatus)
+bool GameEnemy::AppearCountIsMoreThan(InfoEnemy enemyStatus)
 {
-	if (enemyOfStatus.AppearCount >= enemyOfStatus.AppearTimeSec * 60)
-	{
-		return true;
-	}
-	return false;
+	int appearSecond = enemyStatus.AppearTimeSec * 60;
+	return enemyStatus.AppearCount >= appearSecond;
 }
 
 void GameEnemy::MoveOperation()
 {
-	for (auto& enemyOfStatus : m_EnemiesOfStatus)
+	for (auto& status : m_EnemyStatuses)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
-		if (OverTheTimeLimit(enemyOfStatus))
+		if (AppearCountIsMoreThan(status))
 		{
-			enemyOfStatus.MovementChangeCount++;
-			switch (enemyOfStatus.MovePattern)
+			status.MovementChangeCount++;
+			switch (status.MovePattern)
 			{
 			case NORMAL:
 				moveDirection.y += 1.f;
 				m_EnemyMoveSpeed = 4.f;
 				break;
 			case NORMAL2:
-				if (enemyOfStatus.m_MovementChange)
+				moveDirection.y += 2.f;
+				m_EnemyMoveSpeed = 4.f;
+				if (status.m_MovementChange)
 				{
-					moveDirection.y += 2.f;
 					moveDirection.x += 1.f;
-					m_EnemyMoveSpeed = 4.f;
 				}
-				if (!enemyOfStatus.m_MovementChange)
+				else
 				{
-					moveDirection.y += 2.f;
 					moveDirection.x -= 1.f;
-					m_EnemyMoveSpeed = 4.f;
 				}
-				if (enemyOfStatus.MovementChangeCount == 30)
+				if (status.MovementChangeCount == 30)
 				{
-					enemyOfStatus.m_MovementChange = !enemyOfStatus.m_MovementChange;
-					enemyOfStatus.MovementChangeCount = 0;
+					status.m_MovementChange = !status.m_MovementChange;
+					status.MovementChangeCount = 0;
 				}
 				break;
 			}
 			//単位ベクトルを求める関数
 			D3DXVec2Normalize(&moveDirection, &moveDirection);
 			moveDirection *= m_EnemyMoveSpeed;
-			m_pDirectX->MoveCustomVertex(enemyOfStatus.Enemy, moveDirection);
+			m_pDirectX->MoveCustomVertex(status.Enemy, moveDirection);
 		}
 	}
 }
@@ -123,21 +118,23 @@ void GameEnemy::LoadDate(const char* fileName)
 				break;
 			case TYPE:
 				staggStream >> m_EnemyData.Type;
+				float size;
 				switch (m_EnemyData.Type)
 				{
 				case NORMAL:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE);
+					size = ENEMY_SIZE;
 					break;
 				case NORMAL2:
-					m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, ENEMY_SIZE * 2.f);
+					size = ENEMY_SIZE * 2.f;
 					break;
 				}
+				m_pDirectX->InitSquareCustomVertex(m_EnemyData.Enemy, m_EnemyData.X, m_EnemyData.Y, size);
 				break;
 			case MOVEPATTERN:
 				staggStream >> m_EnemyData.MovePattern;
 				break;
 			}
 		}
-		m_EnemiesOfStatus.push_back(m_EnemyData);
+		m_EnemyStatuses.push_back(m_EnemyData);
 	}
 }
