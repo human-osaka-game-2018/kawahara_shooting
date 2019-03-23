@@ -33,7 +33,7 @@ void GameEnemy::Render()
 {
 	for (auto& status : m_EnemyStatuses)
 	{
-		if (CanAppearTime(status))
+		if (CanAppear(status))
 		{
 			m_pDirectX->DrawTexture("GAME_ENEMY_TEX", status.Enemy);
 		}
@@ -41,7 +41,7 @@ void GameEnemy::Render()
 }
 
 
-bool GameEnemy::CanAppearTime(EnemyStatus enemyStatus)
+bool GameEnemy::CanAppear(EnemyStatus enemyStatus)
 {
 	int appearFrame = enemyStatus.AppearTimeSec * 60;
 	return m_AppearCount >= appearFrame;
@@ -53,7 +53,7 @@ void GameEnemy::MoveOperation()
 	for (auto& status : m_EnemyStatuses)
 	{
 		D3DXVECTOR2 moveDirection(0.f, 0.f);
-		if (CanAppearTime(status))
+		if (CanAppear(status))
 		{
 			status.MovementChangeCount++;
 			switch (status.MovePattern)

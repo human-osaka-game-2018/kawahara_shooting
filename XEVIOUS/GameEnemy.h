@@ -51,5 +51,5 @@ private:
 	std::vector<EnemyStatus> m_EnemyStatuses;
 	EnemyStatus m_EnemyData;
 	float m_EnemyMoveSpeed;
-	bool CanAppearTime(EnemyStatus enemyStatus);
+	bool CanAppear(EnemyStatus enemyStatus);
 };
