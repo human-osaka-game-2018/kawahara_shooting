@@ -30,15 +30,15 @@ public:
 	void Update();
 	void Render();
 	void LoadDate(const char* fileNam);
+	int m_AppearCount = 0;
 
 private:
 	void MoveOperation();
 	DirectX* m_pDirectX;
-	struct InfoEnemy
+	struct EnemyStatus
 	{
 		CustomVertex Enemy[4];
-		int AppearCount = 0;
-		bool m_MovementChange = true;
+		bool MovementChange = true;
 		int MovementChangeCount = 0;
 		int AppearTimeSec;
 		float X = 0.f;
@@ -48,8 +48,8 @@ private:
 		int Type;
 		int MovePattern;
 	};
-	std::vector<InfoEnemy> m_EnemyStatuses;
-	InfoEnemy m_EnemyData;
+	std::vector<EnemyStatus> m_EnemyStatuses;
+	EnemyStatus m_EnemyData;
 	float m_EnemyMoveSpeed;
-	bool AppearCountIsMoreThan(InfoEnemy enemies);
+	bool CanAppearTime(EnemyStatus enemyStatus);
 };
