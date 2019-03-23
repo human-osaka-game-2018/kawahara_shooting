@@ -40,8 +40,6 @@ private:
 		int AppearCount = 0;
 		bool m_MovementChange = true;
 		int MovementChangeCount = 0;
-
-
 		int AppearTimeSec;
 		float X = 0.f;
 		float Y = 0.f;

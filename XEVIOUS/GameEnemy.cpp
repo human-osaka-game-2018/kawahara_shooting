@@ -1,12 +1,13 @@
 ﻿#include"GameEnemy.h"
 #include <fstream>
 #include <string>
-
-
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 
+using std::ifstream;
+using std::string;
+using std::stringstream;
 
 GameEnemy::GameEnemy()
 {
@@ -89,13 +90,13 @@ void GameEnemy::LoadDate(const char* fileName)
 {
 
 	// ファイル読み込み関数実行
-	std::ifstream ifs(fileName);
-	std::string str;
+	ifstream ifs(fileName);
+	string str;
 	
 	while (getline(ifs, str))
 	{
 		replace(str.begin(), str.end(), ',', ' ');
-		std::stringstream staggStream(str);
+		stringstream staggStream(str);
 
 		for (int i = 0;i < (MOVEPATTERN + 1);i++)
 		{
