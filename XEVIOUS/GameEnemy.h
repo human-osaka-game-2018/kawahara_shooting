@@ -16,8 +16,8 @@ enum Parameter
 
 enum EnemyType
 {
-	NORMAL,
-	NORMAL2,
+	TYPE1,
+	TYPE2,
 };
 
 const float ENEMY_SIZE = 32.f;

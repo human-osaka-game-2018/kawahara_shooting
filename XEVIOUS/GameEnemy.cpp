@@ -56,11 +56,11 @@ void GameEnemy::MoveOperation()
 			status.MovementChangeCount++;
 			switch (status.MovePattern)
 			{
-			case NORMAL:
+			case TYPE1:
 				moveDirection.y += 1.f;
 				m_EnemyMoveSpeed = 4.f;
 				break;
-			case NORMAL2:
+			case TYPE2:
 				moveDirection.y += 2.f;
 				m_EnemyMoveSpeed = 4.f;
 				if (status.m_MovementChange)
@@ -122,10 +122,10 @@ void GameEnemy::LoadDate(const char* fileName)
 				float size;
 				switch (m_EnemyData.Type)
 				{
-				case NORMAL:
+				case TYPE1:
 					size = ENEMY_SIZE;
 					break;
-				case NORMAL2:
+				case TYPE2:
 					size = ENEMY_SIZE * 2.f;
 					break;
 				}
