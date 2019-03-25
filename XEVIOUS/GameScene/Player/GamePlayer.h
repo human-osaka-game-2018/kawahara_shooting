@@ -17,11 +17,8 @@ public:
 private:
 	DirectX* m_pDirectX;
 	GameBullet* m_pGameBullet;
-	struct InfoPlayer
-	{
-		float X = 0.f;
-		float Y = 0.f;
-	};
+	float m_PosX = 0.f;
+	float m_PosY = 0.f;
 	CustomVertex m_Player[4];
 	void KeyOperation();
 	void TurnbackToGameArea();

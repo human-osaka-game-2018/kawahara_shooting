@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include "DirectX.h"
 #include "GamePlayer.h"
-#include "GameEnemy.h"
+#include "EnemyManager.h"
 
 
 class GameScene : public Scene
@@ -17,7 +17,7 @@ public:
 private:
 	DirectX * m_pDirectX;
 	GamePlayer* m_pGamePlayer;
-	GameEnemy* m_pGameEnemy;
+	EnemyManager* m_pEnemyManager;
 	CustomVertex m_BGVertices[4];
 	struct InfoGameBG
 	{
