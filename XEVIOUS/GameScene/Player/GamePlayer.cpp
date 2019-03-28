@@ -7,6 +7,7 @@ GamePlayer::GamePlayer()
 	m_PosX = 320.f;
 	m_PosY = 464.f;
 	m_pDirectX->InitSquareCustomVertex(m_Player, m_PosX, m_PosY, PLAYER_SIZE);
+}
 
 GamePlayer::~GamePlayer()
 {

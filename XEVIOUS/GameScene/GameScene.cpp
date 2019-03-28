@@ -6,7 +6,7 @@ GameScene::GameScene()
 	m_pGamePlayer = new GamePlayer();
 	m_pEnemyManager = new EnemyManager();
 	LoadResources();
-	m_pGameEnemy->LoadDate("csv/Stage1.csv");
+	m_pEnemyManager->LoadDate("csv/Stage1.csv");
 	InfoGameBG centerBG;
 	centerBG.CenterBGPosX = 320.f;
 	centerBG.CenterBGPosY = 240.f;
