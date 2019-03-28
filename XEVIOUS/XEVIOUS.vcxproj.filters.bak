@@ -54,11 +54,16 @@
     <ClCompile Include="GameScene\GameScene.cpp">
       <Filter>GameScene</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="GameEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+=======
     <ClCompile Include="GameScene\Enemy\Enemy.cpp">
       <Filter>GameScene\Enemy</Filter>
     </ClCompile>
-<ClCompile Include="GameScene\Enemy\EnemyManager.cpp">
+    <ClCompile Include="GameScene\Enemy\EnemyManager.cpp">
       <Filter>GameScene\Enemy</Filter>
+>>>>>>> EnemyとEnemyStatusの改善
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,12 +93,17 @@
     </ClInclude>
     <ClInclude Include="GameScene\GameScene.h">
       <Filter>GameScene</Filter>
-     </ClInclude>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="GameEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+=======
     <ClInclude Include="GameScene\Enemy\Enemy.h">
       <Filter>GameScene\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="GameScene\Enemy\EnemyManager.h">
       <Filter>GameScene\Enemy</Filter>
+>>>>>>> EnemyとEnemyStatusの改善
     </ClInclude>
   </ItemGroup>
 </Project>

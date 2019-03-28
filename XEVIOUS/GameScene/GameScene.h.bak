@@ -3,7 +3,11 @@
 #include "Scene.h"
 #include "DirectX.h"
 #include "GamePlayer.h"
+<<<<<<< HEAD
+#include "GameEnemy.h"
+=======
 #include "EnemyManager.h"
+>>>>>>> EnemyとEnemyStatusの改善
 
 
 class GameScene : public Scene
@@ -17,7 +21,11 @@ public:
 private:
 	DirectX * m_pDirectX;
 	GamePlayer* m_pGamePlayer;
+<<<<<<< HEAD
+	GameEnemy* m_pGameEnemy;
+=======
 	EnemyManager* m_pEnemyManager;
+>>>>>>> EnemyとEnemyStatusの改善
 	CustomVertex m_BGVertices[4];
 	struct InfoGameBG
 	{

@@ -4,9 +4,15 @@ GameScene::GameScene()
 {
 	m_pDirectX = DirectX::GetInstance();
 	m_pGamePlayer = new GamePlayer();
-	m_pEnemyManager = new EnemyManager();
+<<<<<<< HEAD
+	m_pGameEnemy = new GameEnemy();
 	LoadResources();
 	m_pGameEnemy->LoadDate("csv/Stage1.csv");
+=======
+	m_pEnemyManager = new EnemyManager();
+	LoadResources();
+	m_pEnemyManager->LoadDate("csv/Stage1.csv");
+>>>>>>> EnemyとEnemyStatusの改善
 	InfoGameBG centerBG;
 	centerBG.CenterBGPosX = 320.f;
 	centerBG.CenterBGPosY = 240.f;
@@ -24,7 +30,11 @@ GameScene::~GameScene()
 void GameScene::Update()
 {
 	m_pGamePlayer->Update();
+<<<<<<< HEAD
+	m_pGameEnemy->Update();
+=======
 	m_pEnemyManager->Update();
+>>>>>>> EnemyとEnemyStatusの改善
 	ScrollBackGround();
 	KeyOperation();
 }
@@ -33,7 +43,11 @@ void GameScene::Render()
 {
 	m_pDirectX->DrawTexture("GAME_BG_TEX", m_BGVertices);
 	m_pGamePlayer->Render();
+<<<<<<< HEAD
+	m_pGameEnemy->Render();
+=======
 	m_pEnemyManager->Render();
+>>>>>>> EnemyとEnemyStatusの改善
 }
 
 void GameScene::KeyOperation()
