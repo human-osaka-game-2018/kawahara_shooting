@@ -1,6 +1,7 @@
 ﻿#include "GameBullet.h"
 
 using std::vector;
+std::vector<GameBullet::InfoBullet> GameBullet::m_BulletPos;
 
 GameBullet::GameBullet() : m_BulletInterval(false), m_BulletIntervalCount(0), m_BulletIntervalRange(8)
 {
@@ -14,10 +15,21 @@ GameBullet::~GameBullet()
 
 void GameBullet::Update()
 {
+	int firednumber = 0;
 	for (auto& centerBullet : m_BulletPos)
 	{
 		centerBullet.Y -= BULLET_SPEED;
 		m_pDirectX->InitSquareCustomVertex(centerBullet.Bullet, centerBullet.X, centerBullet.Y, BULLET_SIZE);
+		if (centerBullet.Y < 0)
+		{
+			m_BulletPos.erase(m_BulletPos.begin());
+		} 
+		if (centerBullet.CheakHit)
+		{
+ 			m_BulletPos.erase(m_BulletPos.begin() + firednumber);
+			firednumber = 0;
+		}
+		firednumber++;
 	}
 
 	if (m_BulletInterval)

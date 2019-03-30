@@ -198,3 +198,15 @@ bool DirectX::IsKeyPressed(int dik)
 	}
 	return false;
 }
+
+bool DirectX::CustomVertexCollision(CustomVertex FirstCustomVertex[4], CustomVertex SecondCustomVertex[4])
+{
+	if (FirstCustomVertex[0].x <= SecondCustomVertex[2].x  && SecondCustomVertex[0].x <= FirstCustomVertex[2].x)
+	{
+		if (FirstCustomVertex[0].y <= SecondCustomVertex[2].y && SecondCustomVertex[0].y <= FirstCustomVertex[2].y)
+		{
+			return true;
+		}
+	}
+	return false;
+}

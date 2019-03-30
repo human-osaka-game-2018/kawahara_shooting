@@ -46,6 +46,7 @@ public:
 	bool IsKeyPressed(int dik);
 	void CaptureKeyState();
 	void DeleteInstence();
+	bool CustomVertexCollision(CustomVertex FirstCustomVertex[4], CustomVertex SecondCustomVertex[4]);
 
 private:
 	DirectX();

@@ -1,5 +1,7 @@
 ﻿#include "GamePlayer.h"
 
+GamePlayer* GamePlayer::m_pInstance = NULL;
+
 GamePlayer::GamePlayer()
 {
 	m_pDirectX = DirectX::GetInstance();
@@ -13,6 +15,21 @@ GamePlayer::~GamePlayer()
 {
 	delete m_pGameBullet;
 	m_pGameBullet = NULL;
+}
+
+GamePlayer* GamePlayer::GetInstance()
+{
+	if (m_pInstance == NULL)
+	{
+		m_pInstance = new GamePlayer();
+	}
+	return m_pInstance;
+}
+
+void GamePlayer::DeleteInstence()
+{
+	delete m_pInstance;
+	m_pInstance = NULL;
 }
 
 void GamePlayer::Update()

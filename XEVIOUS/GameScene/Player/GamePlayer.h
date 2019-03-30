@@ -9,17 +9,24 @@ const float PLAYER_MOVE_SPEED = 5.f;
 class GamePlayer
 {
 public:
-	GamePlayer();
-	~GamePlayer();
+	//singleton関係
+	static GamePlayer* GetInstance();
+	void DeleteInstence();
+
 	void Update();
 	void Render();
 	
+	CustomVertex m_Player[4];
 private:
+	GamePlayer();
+	~GamePlayer();
+
 	DirectX* m_pDirectX;
 	GameBullet* m_pGameBullet;
 	float m_PosX = 0.f;
 	float m_PosY = 0.f;
-	CustomVertex m_Player[4];
 	void KeyOperation();
 	void TurnbackToGameArea();
+
+	static GamePlayer* m_pInstance;
 };

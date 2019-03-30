@@ -3,7 +3,7 @@
 GameScene::GameScene()
 {
 	m_pDirectX = DirectX::GetInstance();
-	m_pGamePlayer = new GamePlayer();
+	m_pGamePlayer = GamePlayer::GetInstance();
 	m_pEnemyManager = new EnemyManager();
 	LoadResources();
 	m_pEnemyManager->LoadDate("csv/Stage1.csv");
@@ -15,8 +15,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-	delete m_pGamePlayer;
-	m_pGamePlayer = NULL;
+	m_pGamePlayer->DeleteInstence();
 	delete m_pEnemyManager;
 	m_pEnemyManager = NULL;
 }
@@ -28,6 +27,7 @@ void GameScene::Update()
 	ScrollBackGround();
 	KeyOperation();
 }
+
 
 void GameScene::Render()
 {

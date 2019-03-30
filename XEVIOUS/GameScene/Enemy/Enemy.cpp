@@ -4,11 +4,14 @@ Enemy::Enemy(Status status)
 {
 	m_Status = status;
 	m_pDirectX = DirectX::GetInstance();
+	m_pGamePlayer = GamePlayer::GetInstance();
+	m_pGameBullet = new GameBullet();
 }
 
 Enemy::~Enemy()
 {
-
+	delete m_pGameBullet;
+	m_pGameBullet = NULL;
 }
 
 void Enemy::Update()
@@ -53,5 +56,24 @@ void Enemy::MoveOperation()
 	D3DXVec2Normalize(&moveDirection, &moveDirection);
 	moveDirection *= m_EnemyMoveSpeed;
 	m_pDirectX->MoveCustomVertex(m_Status.m_EnemyVertex, moveDirection);
-
 }
+
+void Enemy::DamageCalculation()
+{
+	m_Status.m_HP -= 1;
+}
+
+void Enemy::CheckCollisionPlayertoEnemy()
+{
+	if (m_pDirectX->CustomVertexCollision(m_Status.m_EnemyVertex, m_pGamePlayer->m_Player))
+	{
+		exit(1);
+	}
+}
+
+void Enemy::CheckCollisionBullettoEnemy()
+{
+	m_Status.m_HP -= 1;
+}
+
+

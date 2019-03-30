@@ -14,17 +14,20 @@ public:
 	void Update();
 	void Render();
 	void Create(float centerPlayerPosX, float centerPlayerPosY);
-
-private:
-	DirectX* m_pDirectX;
 	struct InfoBullet
 	{
 		CustomVertex Bullet[4];
+		bool CheakHit = false;
 
 		float X = 0.f;
 		float Y = 0.f;
 	};
-	std::vector<InfoBullet> m_BulletPos;
+
+	static  std::vector<InfoBullet> m_BulletPos;
+	std::vector<InfoBullet> GetBulletPos() { return m_BulletPos; }
+
+private:
+	DirectX* m_pDirectX;
 	InfoBullet m_CenterBullet;
 	int m_BulletIntervalCount;
 	bool m_BulletInterval;

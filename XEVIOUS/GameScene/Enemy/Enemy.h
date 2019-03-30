@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include"DirectX.h"
-
+#include "GamePlayer.h"
 
 enum EnemyType
 {
@@ -22,18 +22,24 @@ public:
 		int m_Item;
 		int m_Type;
 		int m_MovePattern;
+		int m_TheirNumber;
 	};
 
 	Enemy(Status status);
 	~Enemy();
 	void Update();
 	void Render();
+	void DamageCalculation();
+	void CheckCollisionPlayertoEnemy();
+	void CheckCollisionBullettoEnemy();
 
-	const Status& GetStatus() { return m_Status; }
+	Status GetStatus() { return m_Status; }
 
 private:
+	DirectX * m_pDirectX;
+	GamePlayer * m_pGamePlayer;
+	GameBullet* m_pGameBullet;
 	void MoveOperation();
-	DirectX* m_pDirectX;
 	float m_EnemyMoveSpeed;
 	bool m_MovementChange = true;
 	int m_MovementChangeCount = 0;

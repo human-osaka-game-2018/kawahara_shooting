@@ -12,11 +12,13 @@ using std::stringstream;
 EnemyManager::EnemyManager()
 {
 	m_pDirectX = DirectX::GetInstance();
+	m_pGameBullet = new GameBullet();
 }
 
 EnemyManager::~EnemyManager()
 {
-
+	delete m_pGameBullet;
+	m_pGameBullet = NULL;
 }
 
 void EnemyManager::Update()
@@ -32,10 +34,12 @@ void EnemyManager::Update()
 			m_EnemyCreateCount--;
 		}
 	}
+	Collision();
+
 	for (auto& enemy : m_Enemies)
 	{
 		enemy->Update();
-	}
+ 	}
 }
 
 void EnemyManager::Render()
@@ -51,6 +55,22 @@ bool EnemyManager::CanAppear(int appeartimesec)
 {
 	int appearFrame = appeartimesec * 60;
 	return m_AppearCount >= appearFrame;
+}
+
+void EnemyManager::Collision()
+{
+	for (auto& enemyStatus : m_Enemies)
+	{
+		enemyStatus->CheckCollisionPlayertoEnemy();
+		for (auto& bulletData : m_pGameBullet->m_BulletPos)
+		{
+			if (!CanAppear(enemyStatus->GetStatus().m_AppearTimeSec)) continue;
+
+			if (!m_pDirectX->CustomVertexCollision(enemyStatus->GetStatus().m_EnemyVertex, bulletData.Bullet)) continue;
+   			enemyStatus->CheckCollisionBullettoEnemy();
+			bulletData.CheakHit = true;
+		}
+	}
 }
 
 
